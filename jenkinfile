@@ -7,7 +7,7 @@ def secrets = [
         [
             path: "${VAULT_PATH_SSH}", engineVersion: 1,
             secretValues: [
-                [vaultKey: 'user'], [vaultKey: 'secret'], [vaultKey: 'username']
+                [vaultKey: 'username'], [vaultKey: 'secret']
             ]
         ]
  ]
