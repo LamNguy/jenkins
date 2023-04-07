@@ -23,9 +23,7 @@ def configuration = [
  }
 
  withVault([configuration: configuration, vaultSecrets: secrets]) {
-        sh 'echo $user'
-        sh 'echo $secret'
-      
+        sh 'echo 1'  
     }
 
 }
