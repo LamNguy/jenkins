@@ -30,6 +30,10 @@ def configuration = [
               secret: $secret
               '''
               sh "cat extra_var.yaml" 
+
+              sh """
+                    ansible-playbook -i inventory/hosts_window --extra-vars @extra_var.yaml  window.yaml
+              """
        }
     }
 
