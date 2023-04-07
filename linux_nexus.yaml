@@ -1,0 +1,7 @@
+- name: Get latest version of file from Nexus
+      get_url:
+        url: "{{ nexus_url }}"
+        dest: "{{ remote_dir }}/{{ nexus_file }}"
+        username: "{{ nexus_user }}"
+        password: "{{ nexus_password }}"
+        force: true
