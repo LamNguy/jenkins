@@ -2,6 +2,8 @@ node {
 
 def VAULT_ADDR = 'https://vault.ocp4.example.com:8200'
 def VAULT_PATH_SSH = 'secrets/creds/example'
+def NEXUS_ADDR = 'https://nexus-dso.techcombank.com.vn'
+def NEXUS_CRED = 'nexus-dso-rw'
 
 def secrets = [
         [
@@ -21,20 +23,21 @@ def configuration = [
         cleanWs()
         checkout scm
  }
+ withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "ce5ea520-7a1d-4ae2-8a80-72cc3ff5ef49", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD']]){
+       withVault([configuration: configuration, vaultSecrets: secrets]) {
+              stage("Run playbook") {
+                     sh '''
+                     cat <<EOT > extra_var.yaml
+       user: ${username}
+       pass: ${secret}
+                     '''
+                     sh "cat extra_var.yaml" 
 
- withVault([configuration: configuration, vaultSecrets: secrets]) {
-       stage("Run playbook") {
-              sh '''
-              cat <<EOT > extra_var.yaml
-user: ${username}
-pass: ${secret}
-              '''
-              sh "cat extra_var.yaml" 
-
-              sh """
-                    ansible-playbook -i inventory --extra-vars @extra_var.yaml  window.yaml
-              """
+                     sh """
+                     ansible-playbook -i inventory --extra-vars @extra_var.yaml  window.yaml
+                     """
+              }
        }
-    }
+}
 
 }
