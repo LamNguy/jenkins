@@ -26,8 +26,8 @@ def configuration = [
        stage("Run playbook") {
               sh '''
               cat <<EOT > extra_var.yaml
-              user: ${username}
-              pass: ${secret}
+user: ${username}
+pass: ${secret}
               '''
               sh "cat extra_var.yaml" 
 
