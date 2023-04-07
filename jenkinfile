@@ -22,12 +22,10 @@ def configuration = [
         checkout scm
  }
 
- withVault([configuration: configuration, vaultSecrets: secrets]){
-            stage("Run playbook") {
-                sh '''
-                echo ${user}
-                '''
-            }
-        }
+ withVault([configuration: configuration, vaultSecrets: secrets]) {
+        sh 'echo $user'
+        sh 'echo $secret'
+      
+    }
 
 }
