@@ -1,0 +1,4 @@
+ stage("Checkout SCM") {
+        cleanWs()
+        checkout scm
+ }
