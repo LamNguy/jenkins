@@ -1,7 +1,7 @@
 node { 
 
 def VAULT_ADDR = 'https://vault.ocp4.example.com:8200'
-def VAULT_PATH_SSH = ''
+def VAULT_PATH_SSH = 'secrets/creds/example'
 
 def secrets = [
         [
