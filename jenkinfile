@@ -24,7 +24,8 @@ def configuration = [
 
  withVault([configuration: configuration, vaultSecrets: secrets]) {
        stage("Run playbook") {
-              sh 'echo 1'  
+              sh 'echo $user'
+              sh 'echo $secret'  
        }
     }
 
