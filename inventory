@@ -1,7 +1,1 @@
-[host:vars]
-ansible_connection=ssh
-ansible_port=22
-ansible_ssh_common_args="-o StrictHostKeyChecking=no"
-
-[hosts]
-20.196.202.246 ansible_user="{{ user }}" ansible_password="{{ secret }}"
+20.196.202.246
