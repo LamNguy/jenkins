@@ -27,7 +27,7 @@ def configuration = [
               sh '''
               cat <<EOT > extra_var.yaml
 user: ${username}
-pass: ${secret}
+pass: "12345"
               '''
               sh "cat extra_var.yaml" 
 
