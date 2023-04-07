@@ -5,7 +5,7 @@ def VAULT_PATH_SSH = 'secrets/creds/example'
 
 def secrets = [
         [
-            path: "${VAULT_PATH_SSH}", engineVersion: 2,
+            path: "${VAULT_PATH_SSH}", engineVersion: 1,
             secretValues: [
                 [vaultKey: 'user'], [vaultKey: 'secret']
             ]
