@@ -1,0 +1,9 @@
+- name: SSH to remote server with credentials
+  hosts: all
+  remote_user: "{{ user }}"
+  vars:
+    ansible_ssh_pass: "{{ pass }}"
+
+  tasks:
+    - name: Run command on remote server
+      shell: touch /tmp/ahihi1
