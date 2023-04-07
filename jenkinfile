@@ -12,7 +12,7 @@ def secrets = [
         ]
  ]
 
-def configuration : LinkedHashMap = [
+def configuration = [
        vaultUrl: "${VAULT_ADDR}",
        vaultCredentialId: 'jenkins-role',
        engineVersion: 2
