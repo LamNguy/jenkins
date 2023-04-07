@@ -23,7 +23,9 @@ def configuration = [
  }
 
  withVault([configuration: configuration, vaultSecrets: secrets]) {
-        sh 'echo 1'  
+       stage("Run playbook") {
+              sh 'echo 1'  
+       }
     }
 
 }
