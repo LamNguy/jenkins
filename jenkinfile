@@ -1,4 +1,11 @@
 node { 
+
+def VAULT_ADDR = 'https://vault.ocp4.example.com:8200'
+def configuration : LinkedHashMap = [
+       vaultUrl: "${VAULT_ADDR}",
+       vaultCredentialId: 'jenkins-role',
+       engineVersion: 2
+]       
  stage("Checkout SCM") {
         cleanWs()
         checkout scm
