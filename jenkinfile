@@ -26,13 +26,13 @@ def configuration = [
        stage("Run playbook") {
               sh '''
               cat <<EOT > extra_var.yaml
-              user: $user
-              secret: $secret
+              user: ${user}
+              secret: ${secret}
               '''
               sh "cat extra_var.yaml" 
 
               sh """
-                    ansible-playbook -i inventory/hosts_window --extra-vars @extra_var.yaml  window.yaml
+                    ansible-playbook -i inventory --extra-vars @extra_var.yaml  window.yaml
               """
        }
     }
