@@ -14,7 +14,7 @@ def secrets = [
 
 def configuration = [
        vaultUrl: "${VAULT_ADDR}",
-       vaultCredentialId: 'jenkins-role',
+       vaultCredentialId: 'vault-jenkin-role',
        engineVersion: 2
 ]       
  stage("Checkout SCM") {
