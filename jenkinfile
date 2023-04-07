@@ -7,7 +7,7 @@ def secrets = [
         [
             path: "${VAULT_PATH_SSH}", engineVersion: 1,
             secretValues: [
-                [vaultKey: 'user'], [vaultKey: 'pass'],
+                [vaultKey: 'user'], [vaultKey: 'secret'],
             ]
         ]
  ]
@@ -27,7 +27,7 @@ def configuration = [
               sh '''
               cat <<EOT > extra_var.yaml
 user: ${username}
-pass: ${pass}
+pass: ${secret}
               '''
               sh "cat extra_var.yaml" 
 
