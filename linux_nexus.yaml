@@ -1,6 +1,6 @@
 - name: Get latest version of file from Nexus
       get_url:
-        url: http://10.1.30.3:8081/repository/cortex/cortex/Cortex_linux_rpm.tar.gz
+        url: "http://10.1.30.3:8081/repository/cortex/cortex/Cortex_linux_rpm.tar.gz"
         dest: "/tmp/"
         username: "{{ nexus_user }}"
         password: "{{ nexus_password }}"
