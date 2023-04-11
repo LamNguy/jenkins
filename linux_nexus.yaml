@@ -1,10 +1,19 @@
-- name: Get latest version of file from Nexus
+---
+  - name: SSH to remote server with credentials
+  hosts: all
+  remote_user: "{{ user }}"
+  vars:
+    ansible_ssh_pass: "{{ pass }}"
+
+
+  tasks:
+    - name: Download cortex file from nexus
       get_url:
-        url: "http://10.1.30.3:8081/repository/cortex/cortex/Cortex_linux_rpm.tar.gz"
-        dest: "/tmp/"
+        url: http://10.1.30.3:8081/repository/cortex/cortex/Cortex_linux_rpm.tar.gz
+        dest: tmp/ortex_linux_rpm.tar.gz
         username: "{{ nexus_user }}"
         password: "{{ nexus_password }}"
         force: true
-
-
+        
+   
         
