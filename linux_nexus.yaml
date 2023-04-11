@@ -1,5 +1,5 @@
 ---
-  - name: SSH to remote server with credentials
+- name: SSH to remote server with credentials
   hosts: all
   remote_user: "{{ user }}"
   vars:
