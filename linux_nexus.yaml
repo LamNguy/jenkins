@@ -4,8 +4,16 @@
   remote_user: "{{ user }}"
   vars:
     ansible_ssh_pass: "{{ pass }}"
+
   become: true
   tasks:
+    - name: Download cortex file from nexus
+      get_url:
+        url: http://10.1.30.3:8081/repository/cortex/cortex/Cortex_linux_rpm.tar.gz
+        dest: "/root/Cortex_linux_rpm.tar.gz"
+        username: "{{ nexus_user }}"
+        password: "{{ nexus_password }}"
+        force: true
     - name: Transfer the script
       copy: src=install_Cortex_Linux.sh dest=/home/cloud mode=0777
 
