@@ -6,12 +6,6 @@
     ansible_ssh_pass: "{{ pass }}"
   become: true
   tasks:
-    - name: Download cortex file from nexus
-      get_url:
-        url: http://10.1.30.3:8081/repository/cortex/cortex/Cortex_linux_rpm.tar.gz
-        dest: /tmp/ortex_linux_rpm.tar.gz
-        username: "{{ nexus_user }}"
-        password: "{{ nexus_password }}"
-        force: true
- 
+    - name: copy and run script to install cortex on EC2 Linux
+      script: /home/cloud/install_Cortex_Linux.sh
         
