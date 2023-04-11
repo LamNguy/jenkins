@@ -6,6 +6,9 @@
     ansible_ssh_pass: "{{ pass }}"
   become: true
   tasks:
-    - name: copy and run script to install cortex on EC2 Linux
-      script: /home/cloud/install_Cortex_Linux.sh
+    - name: Transfer the script
+      copy: src=install_Cortex_Linux.sh dest=/home/cloud mode=0777
+
+    - name: Execute the script
+      command: sh /home/cloud/install_Cortex_Linux.sh
         
