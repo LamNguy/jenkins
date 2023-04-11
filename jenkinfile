@@ -23,18 +23,21 @@ def configuration = [
         cleanWs()
         checkout scm
  }
- withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "ce5ea520-7a1d-4ae2-8a80-72cc3ff5ef49", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD']]){
+ withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${NEXUS_CRED}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD']]){
        withVault([configuration: configuration, vaultSecrets: secrets]) {
               stage("Run playbook") {
                      sh '''
                      cat <<EOT > extra_var.yaml
        user: ${username}
        pass: ${secret}
+       nexus_user: ${NEXUS_USER}
+       nexus_password: ${NEXUS_PASS}
+
                      '''
                      sh "cat extra_var.yaml" 
 
                      sh """
-                     ansible-playbook -i inventory --extra-vars @extra_var.yaml  window.yaml
+                     ansible-playbook -i inventory --extra-vars @extra_var.yaml linux_nexus.yaml
                      """
               }
        }
