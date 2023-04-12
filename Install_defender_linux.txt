@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Run the curl command and store the JSON response in a variable
+response=$(curl --location 'https://asia-southeast1.cloud.twistlock.com/aws-singapore-961146844/api/v22.12/authenticate' \
+                  --header 'accept: application/json; charset=UTF-8' \
+                  --header 'content-type: application/json' \
+                  --data '{
+                            "username": "5ffd973d-dfbc-475e-9db3-c8da22df03fd",
+                            "password": "HXtsyEh8ZoZobecnpxYJXdDZYYU="
+                        }')
+
+# Extract the value of the "Token" key from the JSON response using jq
+a=$(echo "$response" | grep -o '"token":"[^"]*' | sed 's/"token":"//')
+
+# Run the curl command with the Bearer token
+curl -sSL --header "authorization: Bearer $a" -X POST https://asia-southeast1.cloud.twistlock.com/aws-singapore-961146844/api/v1/scripts/defender.sh | sudo bash -s -- -c "asia-southeast1.cloud.twistlock.com" -d "none" -v --install-host

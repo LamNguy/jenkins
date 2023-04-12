@@ -1,0 +1,57 @@
+#TCB
+node {
+
+    def VAULT_ADDR : String = 'https://vault-dso.techcombank.com.vn'
+    def VAULT_PATH : String = ''
+    def VAULT_PATH_SSH : String = ''
+    def NEXUS_ADDR : String = 'https://nexus-dso.techcombank.com.vn'
+    def NEXUS_CRED : String = 'nexus-dso-rw'
+
+    def secrets : ArrayList = [
+        [
+            path: "${VAULT_PATH}", engineVersion: 2,
+            secretValues: [
+                [vaultKey: 'VAULT_TOKEN'],
+                [vaultKey: 'linux_user'],
+            ]
+        ]
+    ]
+
+    def configuration : LinkedHashMap = [
+        vaultUrl: "${VAULT_ADDR}",
+        vaultCredentialId: 'jenkins_approle',
+        engineVersion: 2
+    ]
+
+    stage('Genarate keypair'){
+        sh """
+            ssh-keygen -f <name-key> -t rsa -b 2048 -C "" -q -N "" <<<y
+        """
+    }
+
+    def publicKeyContent = readFile(file: '<name-key>.pub').split("\n")
+    withVault([configuration: configuration, vaultSecrets: secrets]) {
+        stage("Sign public key"){
+            stage("Sign public key"){
+                sh """
+                    curl --silent --show-error --location --request POST '${VAULT_ADDR}/v1/${VAULT_PATH_SSH}' --header 'X-Vault-Token: ${VAULT_TOKEN}' --header 'Content-Type: application/json' --date '{"public_key": "${publicKeyContent[0]}"}' > result.json
+                """
+            }
+        }
+    }
+
+    def signedResponse = readJSON(file: 'result.json')
+    def signedPublickey = signedResponse.data.signed_key.split("\n");
+    writeFile(file: 'kondor_signed_cert.pub', text: signedPublickey[0])
+
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${NEXUS_CRED}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD']]){
+        withVault([configuration: configuration, vaultSecrets: secrets]) {
+            stage("Play ansible-playbook") {
+                sh """
+                    ansible-playbook -i inventory/hosts --extra-vars "ansible_user=${linux_user} nexus_user=${NEXUS_USER} nexus_password=${NEXUS_PASSWORD} nexus_addr=${NEXUS_ADDR} playbook.yaml" 
+            """
+            }
+        }
+    }
+    
+}
