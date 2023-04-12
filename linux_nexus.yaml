@@ -10,7 +10,7 @@
     - name: Download cortex file from nexus
       get_url:
         url: http://10.1.30.3:8081/repository/cortex/cortex/Cortex_linux_rpm.tar.gz
-        dest: "/home/cloud/Cortex_linux_rpm.tar.gz"
+        dest: "/root/Cortex_linux_rpm.tar.gz"
         username: "{{ nexus_user }}"
         password: "{{ nexus_password }}"
         force: true
