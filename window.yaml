@@ -5,5 +5,8 @@
     ansible_ssh_pass: "{{ pass }}"
 
   tasks:
-    - name: Run command on remote server
-      shell: touch /tmp/ahihi1
+    - name: Copy File
+      win_copy:
+        src: C:\test.txt
+        dest: C:\Users\
+        remote_src: yes
