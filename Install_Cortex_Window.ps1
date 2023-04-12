@@ -1,0 +1,1 @@
+msiexec /i C:\Users\Cortex_win_x64.msi /qn TS_ENABLED=1

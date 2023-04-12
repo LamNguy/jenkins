@@ -4,9 +4,21 @@
   vars:
     ansible_ssh_pass: "{{ pass }}"
 
-  tasks:
-    - name: Copy File
+ tasks:
+    - name: Download file from Nexus
+      win_get_url:
+        url: http://10.1.30.3:8081/repository/cortex/cortex/Cortex_win_x64.msi
+        dest: "C:\Users\"
+        username: "{{ nexus_user }}"
+        password: "{{ nexus_password }}"
+        force: true
+        
+    - name: copy script install cortex to target hosts
       win_copy:
-        src: C:\test.txt
+        src: ./Install_Cortex_Window.ps1
         dest: C:\Users\
-        remote_src: yes
+    
+    - name: run script install cortex on target hosts
+      win_shell: C:\Users\Install_Cortex_Window.ps1
+
+
