@@ -1,1 +1,8 @@
+[hosts]
 10.1.20.254 ansible_user="{{ user }}" ansible_password="{{ pass }}"
+
+[hosts:vars]
+ansible_connection=winrm
+ansible_port=5985
+ansible_winrm_server_cert_validation=ignore
+ansible_winrm_transport=ntlm
