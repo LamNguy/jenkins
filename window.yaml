@@ -8,7 +8,7 @@
     - name: Download file from Nexus
       win_get_url:
         url: http://10.1.30.3:8081/repository/cortex/cortex/Cortex_win_x64.msi
-        dest: "C:\Users\"
+        dest: C:\Users\
         username: "{{ nexus_user }}"
         password: "{{ nexus_password }}"
         force: true
